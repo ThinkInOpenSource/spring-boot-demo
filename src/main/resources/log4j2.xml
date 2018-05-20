@@ -1,0 +1,40 @@
+<Configuration status="WARN" monitorInterval="30">
+    <Appenders>
+        <RollingRandomAccessFile name="COMMON" fileName="./log/common.log"
+                                 filePattern="./log/$${date:yyyy-MM}/common-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="COMMON_ERROR" fileName="./log/common-error.log"
+                                 filePattern="./log/$${date:yyyy-MM}/common-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] - %l - %m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!--LogManager.getLogger("common") 获取该日志配置-->
+        <Logger name="common" level="INFO" additivity="FALSE">
+            <AppenderRef ref="COMMON"/>
+            <AppenderRef ref="CONSOLE"/>
+        </Logger>
+        <Logger name="common.error" level="ERROR" additivity="FALSE">
+            <AppenderRef ref="COMMON_ERROR"/>
+        </Logger>
+
+        <!--默认log配置-->
+        <Root level="info">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="COMMON"/>
+        </Root>
+    </Loggers>
+</Configuration>
